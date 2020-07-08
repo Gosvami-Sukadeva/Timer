@@ -44,3 +44,69 @@ body {
   margin-top: 35px;
   position: relative;
 }
+
+.timer__audio {
+  position: absolute;
+  bottom: -100px;
+}
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clock__input {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #fff;
+  font-family: inherit;
+  font-size: 92px;
+  width: 150px;
+  text-align: center;
+}
+.clock__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.clock__input:disabled {
+  border: 1px solid #000;
+}
+
+.clock__label {
+  font-size: 32px;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.button__icon {
+  height: 50px;
+  width: 50px;
+  fill: #fff;
+  transition: fill 0.1s ease-in;
+}
+
+.button__icon:hover {
+  fill: #41b883;
+}
+
+.button__icon--alarm {
+  fill: #c93030;
+  animation: shake 0.1s ease-in infinite;
+}
+
+.hide {
+  display: none;
+}
+
+@keyframes shake {
+  25% {
+    transform: translateX(-1px);
+  }
+  75% {
+    transform: translateX(1px);
+  }
+}
