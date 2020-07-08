@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aldrich&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
     <title>Timer</title>
   </head>
   <body>
@@ -69,6 +74,14 @@
             <use xlink:href="./assets/icons/sprite.svg#refresh-24px"></use>
           </svg>
         </button>
+        <section class="timer__audio">
+          <audio src="./assets/sounds/alarm.mp3" loop></audio>
+          <button class="button" data-edit>
+            <svg class="button__icon button__icon--alarm">
+              <use xlink:href="./assets/icons/sprite.svg#timer-24px"></use>
+            </svg>
+          </button>
+        </section>
       </article>
     </main>
   </body>
