@@ -64,19 +64,19 @@
             <use xlink:href="./assets/icons/sprite.svg#done-24px"></use>
           </svg>
         </button>
-        <button class="button" data-edit>
+        <button class="button" data-run>
           <svg class="button__icon">
             <use xlink:href="./assets/icons/sprite.svg#play_arrow-24px"></use>
           </svg>
         </button>
-        <button class="button" data-edit>
+        <button class="button" data-rerun>
           <svg class="button__icon">
             <use xlink:href="./assets/icons/sprite.svg#refresh-24px"></use>
           </svg>
         </button>
         <section class="timer__audio">
-          <audio src="./assets/sounds/alarm.mp3" loop></audio>
-          <button class="button hide" data-edit>
+          <audio src="./assets/sounds/alarm.mp3" data-audio loop></audio>
+          <button class="button hide" data-alarm title="Stop alarm">
             <svg class="button__icon button__icon--alarm">
               <use xlink:href="./assets/icons/sprite.svg#timer-24px"></use>
             </svg>
@@ -84,5 +84,10 @@
         </section>
       </article>
     </main>
+    <script src="./js/index.js"></script>
+    <script>
+      const timer = new Timer();
+      timer.initializeTimer();
+    </script>
   </body>
 </html>
