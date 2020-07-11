@@ -10,6 +10,8 @@ class Timer {
     this.audio = null;
     this.alarm = null;
 
+    this.iconsPath = "./assets/icons/sprite.svg#";
+
     this.isEdit = true;
 
     this.UiSelectors = {
@@ -35,6 +37,8 @@ class Timer {
     this.timerInputs = document.querySelectorAll(this.UiSelectors.timeInput);
     this.audio = document.querySelector(this.UiSelectors.audio);
     this.alarm = document.querySelector(this.UiSelectors.alarm);
+
+    this.addEventListeners();
   }
 
   addEventListeners() {
@@ -45,13 +49,28 @@ class Timer {
     this.isEdit = !this.isEdit;
 
     if (this.isEdit) {
-      this.editBtn
-        .querySelector("use")
-        .setAttribute("xlink:href", "./assets/icons/sprite.svg#done-24px");
+      this.selectUseElement(this.editBtn).setAttribute(
+        "xlink:href",
+        `${this.iconsPath}done-24px`
+      );
+
+      this.timerInputs.forEach((timerInput) => {
+        timerInput.removeAttribute("disabled");
+      });
+      this.runBtn.setAttribute("disabled", "");
       return;
     }
-    this.editBtn
-      .querySelector("use")
-      .setAttribute("xlink:href", "./assets/icons/sprite.svg#create-24px");
+    this.selectUseElement(this.editBtn).setAttribute(
+      "xlink:href",
+      `${this.iconsPath}create-24px`
+    );
+    this.timerInputs.forEach((timerInput) => {
+      timerInput.setAttribute("disabled", "");
+    });
+    this.runBtn.removeAttribute("disabled");
+  }
+
+  selectUseElement(element) {
+    return element.querySelector("use");
   }
 }

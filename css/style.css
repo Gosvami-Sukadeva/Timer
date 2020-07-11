@@ -82,6 +82,11 @@ body {
   cursor: pointer;
 }
 
+button:disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 .button__icon {
   height: 50px;
   width: 50px;
