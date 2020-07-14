@@ -14,6 +14,17 @@ class Timer {
 
     this.isEdit = true;
 
+    this.hours = 0;
+    this.minutes = 0;
+    this.seconds = 0;
+    this.totalTime = 0;
+    this.currentTime = 0;
+    this.maxSeconds = 60;
+    this.maxMinutes = 60;
+    this.maxHours = 99;
+    this.maxTime =
+      this.maxHours * 3600 + (this.maxMinutes - 1) * 60 + this.maxSeconds - 1;
+
     this.UiSelectors = {
       hours: "hours",
       minutes: "minutes",
@@ -72,5 +83,24 @@ class Timer {
 
   selectUseElement(element) {
     return element.querySelector("use");
+  }
+  getTimerValues() {
+    this.hours = parseInt(this.hoursInput.value, 10);
+    this.minutes = parseInt(this.minutesInput.value, 10);
+    this.seconds = parseInt(this.secondsInput.value, 10);
+
+    this.countTotalTime();
+  }
+
+  setTimerValues() {
+    const seconds = `0${this.currentTime % this.maxSeconds}`;
+    const minutes = `0${this.currentTime % this.maxSeconds}`;
+  }
+
+  countTotalTime() {
+    const timeSum = this.seconds + this.minutes * 60 + this.hours * 3600;
+    this.totalTime = timeSum <= this.maxTime ? timeSum : this.maxTime;
+
+    this.currentTime = this.totalTime;
   }
 }
