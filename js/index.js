@@ -13,6 +13,7 @@ class Timer {
     this.iconsPath = "./assets/icons/sprite.svg#";
 
     this.isEdit = true;
+    this.isCounting = false;
 
     this.hours = 0;
     this.minutes = 0;
@@ -53,10 +54,11 @@ class Timer {
   }
 
   addEventListeners() {
-    this.editBtn.addEventListener("click", () => this.editTime());
+    this.editBtn.addEventListener("click", () => this.switchEditTime());
+    this.runBtn.addEventListener("click", () => this.switchTimer());
   }
 
-  editTime() {
+  switchEditTime() {
     this.isEdit = !this.isEdit;
 
     if (this.isEdit) {
@@ -79,6 +81,24 @@ class Timer {
       timerInput.setAttribute("disabled", "");
     });
     this.runBtn.removeAttribute("disabled");
+
+    this.getTimerValues();
+    this.setTimerValues();
+  }
+
+  switchTimer() {
+    this.isCounting = !this.isCounting;
+    if (this.isCounting) {
+      this.selectUseElement(this.runBtn).setAttribute(
+        "xlink:href",
+        `${this.iconsPath}pause-24px`
+      );
+      return;
+    }
+    this.selectUseElement(this.runBtn).setAttribute(
+      "xlink:href",
+      `${this.iconsPath}play_arrow-24px`
+    );
   }
 
   selectUseElement(element) {
@@ -94,7 +114,12 @@ class Timer {
 
   setTimerValues() {
     const seconds = `0${this.currentTime % this.maxSeconds}`;
-    const minutes = `0${this.currentTime % this.maxSeconds}`;
+    const minutes = `0${Math.floor(this.currentTime / 60) % this.maxMinutes}`;
+    const hours = `0${Math.floor(this.currentTime / 3600) % this.maxHours}`;
+
+    this.secondsInput.value = seconds.slice(-2);
+    this.minutesInput.value = minutes.slice(-2);
+    this.hoursInput.value = hours.slice(-2);
   }
 
   countTotalTime() {
