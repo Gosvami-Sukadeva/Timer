@@ -15,6 +15,8 @@ class Timer {
     this.isEdit = true;
     this.isCounting = false;
 
+    this.interval = null;
+
     this.hours = 0;
     this.minutes = 0;
     this.seconds = 0;
@@ -56,6 +58,7 @@ class Timer {
   addEventListeners() {
     this.editBtn.addEventListener("click", () => this.switchEditTime());
     this.runBtn.addEventListener("click", () => this.switchTimer());
+    this.alarm.addEventListener("click", () => this.stopAlarm());
   }
 
   switchEditTime() {
@@ -93,12 +96,14 @@ class Timer {
         "xlink:href",
         `${this.iconsPath}pause-24px`
       );
+      this.interval = setInterval(() => this.updateTime(), 1000);
       return;
     }
     this.selectUseElement(this.runBtn).setAttribute(
       "xlink:href",
       `${this.iconsPath}play_arrow-24px`
     );
+    clearInterval(this.interval);
   }
 
   selectUseElement(element) {
@@ -127,5 +132,27 @@ class Timer {
     this.totalTime = timeSum <= this.maxTime ? timeSum : this.maxTime;
 
     this.currentTime = this.totalTime;
+  }
+
+  updateTime() {
+    if (this.currentTime) {
+      this.currentTime--;
+      this.setTimerValues();
+      return;
+    }
+    clearInterval(this.interval);
+    this.audio.play();
+    this.alarm.classList.remove("hide");
+    this.editBtn.setAttribute("disabled", "");
+    this.runBtn.setAttribute("disabled", "");
+    this.rerunBtn.setAttribute("disabled", "");
+  }
+
+  stopAlarm() {
+    this.audio.pause();
+    this.alarm.classList.add("hide");
+    this.editBtn.removeAttribute("disabled");
+    this.runBtn.removeAttribute("disabled");
+    this.rerunBtn.removeAttribute("disabled");
   }
 }
