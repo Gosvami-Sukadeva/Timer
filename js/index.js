@@ -58,22 +58,38 @@ class Timer {
   addEventListeners() {
     this.editBtn.addEventListener("click", () => this.switchEditTime());
     this.runBtn.addEventListener("click", () => this.switchTimer());
+    this.rerunBtn.addEventListener("click", () => this.resetTimer());
     this.alarm.addEventListener("click", () => this.stopAlarm());
+
+    this.timerInputs.forEach((input) =>
+      input.addEventListener(
+        "keyup",
+        (e) => e.keyCode === 13 && this.switchEditTime()
+      )
+    );
   }
 
   switchEditTime() {
     this.isEdit = !this.isEdit;
 
     if (this.isEdit) {
+      this.isCounting = false;
+      clearInterval(this.interval);
       this.selectUseElement(this.editBtn).setAttribute(
         "xlink:href",
         `${this.iconsPath}done-24px`
+      );
+      this.selectUseElement(this.runBtn).setAttribute(
+        "xlink:href",
+        `${this.iconsPath}play_arrow-24px`
       );
 
       this.timerInputs.forEach((timerInput) => {
         timerInput.removeAttribute("disabled");
       });
       this.runBtn.setAttribute("disabled", "");
+      this.getTimerValues();
+      this.setTimerValues();
       return;
     }
     this.selectUseElement(this.editBtn).setAttribute(
@@ -120,7 +136,7 @@ class Timer {
   setTimerValues() {
     const seconds = `0${this.currentTime % this.maxSeconds}`;
     const minutes = `0${Math.floor(this.currentTime / 60) % this.maxMinutes}`;
-    const hours = `0${Math.floor(this.currentTime / 3600) % this.maxHours}`;
+    const hours = `0${Math.floor(this.currentTime / 3600)}`;
 
     this.secondsInput.value = seconds.slice(-2);
     this.minutesInput.value = minutes.slice(-2);
@@ -154,5 +170,10 @@ class Timer {
     this.editBtn.removeAttribute("disabled");
     this.runBtn.removeAttribute("disabled");
     this.rerunBtn.removeAttribute("disabled");
+    this.switchEditTime();
+  }
+  resetTimer() {
+    this.currentTime = this.totalTime;
+    this.setTimerValues();
   }
 }
